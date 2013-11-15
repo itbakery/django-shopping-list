@@ -8,7 +8,6 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'shopping_list.views.home', name='home'),
     # url(r'^shopping_list/', include('shopping_list.foo.urls')),
-    url(r'', 'shopping_list.views.)
 
 
 
