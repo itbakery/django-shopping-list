@@ -9,3 +9,5 @@ The application should allow the user to add and delete items from their shoppin
 
 Your solution should define a User class that represents the single user of the application, and should provide methods to get the total number of items on the user's shopping list and a list of the ListItem objects belonging to the user.
 
+admin password = Syamwts445116
+
