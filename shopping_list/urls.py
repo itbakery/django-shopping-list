@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^login/$', 'shopping_list.views.login'),
     url(r'^logout/$', 'shopping_list.views.logout'),
     url(r'^auth/$', 'shopping_list.views.auth_view'),
-    url(r'^loggedin/$', 'shopping_list.views.loggedin'),
+    url(r'^shopping_list/$', 'shopping_list.views.shopping_list'),
     url(r'^invalid/$', 'shopping_list.views.invalid_login'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

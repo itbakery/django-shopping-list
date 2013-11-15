@@ -126,7 +126,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'list',
+    'listitems',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

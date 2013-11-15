@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.context_processors import csrf
 
-from shopping_list.books.models import Book
+from listitems.models import ListItem
+
 def home(request):
     return auth_view(request)
 
@@ -20,17 +21,20 @@ def auth_view(request):
 
     if user is not None:
         auth.login(request, user)
-        return HttpResponseRedirect('/loggedin/')
+        return HttpResponseRedirect('/shopping_list/')
     else:
         return HttpResponseRedirect('/invalid/')
 
 def shopping_list(request):
-
-def book_list(request):
-    books = Book.objects.order_by('name')
-    return render(request, 'book_list.html', {'books': books})
-    return render_to_response('loggedin.html',
-                              {'full_name': request.user.username})
+    print 'GOT HERE'
+    list_items = ListItem.objects.order_by('listitem')
+    return render_to_response('shopping_list.html',
+        {
+            'list_items': list_items,
+            'username': request.user.username
+        })
+    # return render_to_response('shopping_list.html',
+    #                           {'full_name': request.user.username})
 
 def invalid_login(request):
     return render_to_response('invalid_login.html')
