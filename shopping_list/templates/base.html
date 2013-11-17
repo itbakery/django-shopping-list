@@ -2,10 +2,12 @@
 {% load staticfiles %}
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
     <title>{%block title %} Shopping List {% endblock %}</title>
       <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
       <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
+      <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
       <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
       <link href="{% static 'shopping_list.css' %}" rel="stylesheet" media="screen">
   </head>
@@ -14,14 +16,20 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">Shopping List</a>
-
-    </div>
+      <a class="navbar-brand" href="/">
       {% if authenticated %}
-      <a href="/logout/" type="button" class="btn second-button btn-default navbar-btn pull-right">
-        Logout <span class="glyphicon glyphicon-log-out"></span>
-      </a>    
+        {{username}}
       {% endif %}
+      Shopping List
+      </a>
+    </div>
+
+    {% if authenticated %}
+    <a href="/logout/" type="button" class="btn btn-default navbar-btn pull-right">
+      <!-- <span class="hidden-xs">Logout</span> -->
+      Logout <i class="fa fa-sign-out fa-lg"></i>
+    </a>    
+    {% endif %}
 
   </div>
 </div>
@@ -33,6 +41,25 @@
 
       <script src="{% static 'jquery/jquery-1.10.2.min.js' %}"></script>
       <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+      <script type="text/javascript">
+        var frm = $('#add_item_form');
+        frm.submit(function () {
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function (data) {
+                    $("#item_list").append("<li>new item</li>");
+                },
+                error: function(data) {
+                  console.log(data)
+                    // $("#MESSAGE-DIV").html("Something went wrong!");
+                }
+            });
+            return false;
+        });
+      </script>
   </body>
 </html>
 
+<!-- second-button btn-default  -->

@@ -9,6 +9,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+##### JON CONFIG #####
+LOGIN_URL = '/login/'
+##### END JON CONFIG #####
+
+
+
 ############## HEROKU ################
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
