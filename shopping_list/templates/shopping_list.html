@@ -2,9 +2,25 @@
 
 {% block content %}
 
-    <h2>Hi {{username}} you are now logged in!</h2>
-    <br/>
-    {{items}}
+  <div class="row">
+
+    <div class="col-xs-1 col-sm-3 col-md-4 col-lg-4"></div>
+    <div class="col-xs-10 col-sm-6 col-md-4 col-lg-4 well">
+      <ol>
+        {% for list_item in list_items %}
+        <li>{{list_item|capfirst}}</li>
+        {% endfor %}
+        <li>
+          <form>
+           <input type="text" name="newitem" value="" id="newitem"/>
+           <input type="submit" value="Add Item" /> 
+          </form>
+        </li>
+      </ol>
+    </div>
+    <div class="col-xs-1 col-sm-3 col-md-4 col-lg-4"></div>
+  </div>
+
 {% endblock %}
 
 
