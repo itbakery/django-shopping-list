@@ -1,21 +1,43 @@
 Django Shopping List
 ====================
 
-The assignment:
+To view the app, go to fierce-beach-8243.herokuapp.com.  You will have to
+create an account.  When you create an account you must choose a unique
+username.  The email and confirm password fields are ignored for the time being.
 
-Create a Django-based web shopping list application designed for use by a single user.  The application should use Django's ORM to persist the shopping list items to the data store.  Each item should be stored as a single row in the data store.  The class to represent an item should be named ListItem.
+If you are not logged in upon signing up, then the username you chose may have
+already been taken. (The app currently issues no warning or message of any kind
+when this occurs - still a first draft.) Try again with a more unique username.
 
-The application should allow the user to add and delete items from their shopping list.  Adding and removing items from the user's shopping list requires the user be authenticated.  Use Django's built-in authentication system and function decorators to handle the user authentication.
+Upon logging in successfully you will be taken to a page with an empty shopping 
+list in the middle.  You can add items using the control that is provided.  Once an item has
+been added, you can scroll over with your mouse and buttons will appear that
+will allow you to check off the item or delete it.
 
-Your solution should define a User class that represents the single user of the application, and should provide methods to get the total number of items on the user's shopping list and a list of the ListItem objects belonging to the user.
+If you are using a mobile phone the buttons will appear upon touching the row
+with your finger (only tested on an iPhone so far).
 
-admin password = Syamwts445116
+The app makes use of Twitter Bootstrap, which is a responsive UI framework, for
+front-end UI elements and should be functional on a mobile device.
 
-Responsiveness using Bootstrap
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-http://stackoverflow.com/questions/9386429/simple-bootstrap-page-is-not-responsive-on-the-iphone
-http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works
-http://www.helloerik.com/bootstrap-3-less-workflow-tutorial
-http://www.helloerik.com/bootstrap-3-grid-introduction
-http://www.helloerik.com/rise-of-the-small-machines
+Adding, deleting, and checking off items all use Ajax so that the page does
+not have to reload as the shopping list is updated.
+
+If you log out and then log back in you should find that the state of your 
+shopping list has been preserved.
+
+You cannot add duplicate items to the shopping list.  You can, however, rearrange
+the order of the items if you are using an interface with a mouse (i.e., not a mobile
+device).  In order to re-arrange the order, move the mouse over the name of 
+the item. The mouse should change into a shape with 4 arrows, indicating that the 
+item can be dragged.  You can then drag it to a new position in the list. 
+Unfortunately there is no guarantee that the items will remain in that order the
+next time you log in (a project for the second draft).
+
+Multiple users can create accounts and maintain shopping lists without interfering with each other.
+
+If you use the app from multiple devices then you will have to refresh the shopping
+list page in order to see the updates made from another device.
+
+The source code can be viewed at https://github.com/jononomo/django-shopping-list
 
