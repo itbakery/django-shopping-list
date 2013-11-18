@@ -36,7 +36,7 @@ body {
 }
 
 .my-box {
-    background-color: Snow;
+    background-color: #f6f6f6;
     border: 1px solid #DDD;
     color: #9DA0A4;
     top: -1px;
@@ -48,7 +48,7 @@ body {
 }
 
 .well {
-    background-color: #FFFAFC;
+    background-color: #Fdfdfd;
     padding: 7px;
     margin-top: 10px;
     margin-right: 2px;
@@ -60,7 +60,65 @@ body {
     background-color: #f0f0f0;
 }
 
-.hidden-xs {
-    display: -moz-inline-stack;
-    display: inline-block;
+.movecursor {
+  cursor:move;
+}
+
+.sortable {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.sortable:hover {
+  background-color: #f2f2f2;
+}
+
+.btn-success {
+  margin-bottom: 3px;
+}
+
+.narrow-height {
+  margin: 0px;
+  padding: 0px;
+  height: 20px;
+  line-height: 20px;
+  width: 85%;
+  outline: none;
+  /*border:none !important;*/
+  box-shadow:none !important;
+}
+
+.inline-form {
+  margin: 0;
+  padding: 0;
+  display:inline!important;
+}
+
+.btn-xs {
+  padding: 2;
+  margin-bottom: 2;
+  background-color: #f1f1f1;
+}
+.btn-pad {
+  padding-left: 3;
+  padding-right: 3;
+}
+
+.strikeon {
+    position: relative;
+}
+.strikeon::after{
+    content: '';
+    border-bottom: 2px solid #020b0a;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+}
+.strikeoff {
+  text-decoration: none;
+}
+
+@media(min-width:768px)
+{
+  .hidden-xs {display: inline !important; }
 }

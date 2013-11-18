@@ -27,7 +27,7 @@
               <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password">
             </div>
             <button type="submit" class="btn btn-default">
-              Login &nbsp;<span class="glyphicon glyphicon-log-in"></span>
+              Login &nbsp;<i class="fa fa-sign-in fa-lg"></i>
             </button>
           </form>
         </div>
@@ -37,19 +37,19 @@
         <div class="well">
           <form action="/signup/" method="post" role="form">{% csrf_token %}
             <div class="form-group">
-              <input type="text" class="form-control" name="signup_username" id="signup_username" placeholder="Enter Name">
+              <input type="text" class="form-control" name="username" id="signup_username" placeholder="Enter Name">
             </div>
             <div class="form-group">
               <input type="email" class="form-control" name="signup_email" id="email" placeholder="Enter Email">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" name="signup_password" id="signup_password" placeholder="Enter Password">
+              <input type="password" class="form-control" name="password" id="signup_password" placeholder="Enter Password">
             </div>
             <div class="form-group">
               <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password">
             </div>
             <button type="submit" class="btn btn-default">
-              Sign Up &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+              Sign Up &nbsp;<i class="fa fa-thumbs-up fa-lg"></i>
             </button>
           </form>
         </div>

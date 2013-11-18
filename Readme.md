@@ -11,3 +11,11 @@ Your solution should define a User class that represents the single user of the 
 
 admin password = Syamwts445116
 
+Responsiveness using Bootstrap
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+http://stackoverflow.com/questions/9386429/simple-bootstrap-page-is-not-responsive-on-the-iphone
+http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works
+http://www.helloerik.com/bootstrap-3-less-workflow-tutorial
+http://www.helloerik.com/bootstrap-3-grid-introduction
+http://www.helloerik.com/rise-of-the-small-machines
+

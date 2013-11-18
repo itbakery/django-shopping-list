@@ -6,6 +6,7 @@
 
     <title>{%block title %} Shopping List {% endblock %}</title>
       <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+      <!-- <link href="{% static 'jquery/css/ui-lightness/jquery-ui-1.10.3.custom.min.css' %}" rel="stylesheet"> -->
       <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
       <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
@@ -18,7 +19,7 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="/">
       {% if authenticated %}
-        {{username}}
+        {{username|lower|capfirst}}
       {% endif %}
       Shopping List
       </a>
@@ -27,7 +28,7 @@
     {% if authenticated %}
     <a href="/logout/" type="button" class="btn btn-default navbar-btn pull-right">
       <!-- <span class="hidden-xs">Logout</span> -->
-      Logout <i class="fa fa-sign-out fa-lg"></i>
+      <span class="hidden-xs">Logout </span><i class="fa fa-sign-out fa-lg"></i>
     </a>    
     {% endif %}
 
@@ -39,24 +40,184 @@
       {% block content %}{% endblock %}
     </div>
 
-      <script src="{% static 'jquery/jquery-1.10.2.min.js' %}"></script>
+      <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+      <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+   <!--   // <script src="{% static 'jquery/js/jquery.mobile-1.3.2.min.js' %}"></script>  -->
       <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
       <script type="text/javascript">
         var frm = $('#add_item_form');
+        var data = {}
         frm.submit(function () {
             $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-                success: function (data) {
-                    $("#item_list").append("<li>new item</li>");
-                },
-                error: function(data) {
-                  console.log(data)
-                    // $("#MESSAGE-DIV").html("Something went wrong!");
-                }
+              type: frm.attr('method'),
+              url: frm.attr('action'),
+              data: frm.serialize(),
+              success: function (result) {
+                var form_list_item = $("#form_list_item");
+                form_list_item.detach();
+                var check_button = $("<button type=\"submit\" class=\"btn btn-primary btn-xs\" value=\""+result.item_slug+"\"> <i class=\"fa fa-check\" style=\"color:black\"></i> </button>");
+                var del_button = $("<button type=\"submit\" class=\"btn btn-danger btn-xs btn-pad\" value=\""+result.item_slug+"\"> <i class=\"fa fa-times\" style=\"color:black\"></i> </button>");
+
+               
+                // btn_danger.click(function() {
+                //   $.post('/delete_item/', {
+                //     item: $(this).attr('value'),
+                //     csrfmiddlewaretoken:'{{csrf_token}}'
+                //   },
+                //   function(data){
+                //     console.log('******** delete1 **********')
+                //     console.log(data);
+                //     console.log('****** end delete ********')
+                //   });
+                //   console.log('want to remove: '+$(this).attr('value'));
+                //   console.log($('#'+$(this).attr('value')));
+                //   $('#'+$(this).attr('value')).remove();
+                // });
+
+                del_button.click(function() {
+                  $.post('/delete_item/', {
+                    item: $(this).attr('value'),
+                    csrfmiddlewaretoken:'{{csrf_token}}'
+                  },
+                  function(data){
+                    console.log('******** delete1 **********')
+                    console.log(data);
+                    console.log('****** end delete ********')
+                    $(".narrow-height").focus()
+                  });
+                  console.log('want to remove: '+$(this).attr('value'));
+                  console.log($('#'+$(this).attr('value')));
+
+                  $('#'+del_button.attr('value')).remove();
+                });
+
+                check_button.click(function() {
+                  strike = $(this).parent().find('span').hasClass('strikeon');
+                  $.post('/purchased/', {
+                    item: $(this).attr('value'),
+                    purchased: !strike,
+                    csrfmiddlewaretoken:'{{csrf_token}}'
+                  },
+                  function(data) {
+                    console.log(data);
+                    if (data.success) {
+                      if (data.purchased) {
+                        console.log('strikethrough')
+                        $('#'+data.item_slug).find('span').removeClass('strikeoff');
+                        $('#'+data.item_slug).find('span').addClass('strikeon');
+                      }
+                      else {
+                        console.log('no strike')
+                        $('#'+data.item_slug).find('span').removeClass('strikeon');
+                        $('#'+data.item_slug).find('span').addClass('strikeoff');
+                      }
+                    }
+                    $(".narrow-height").focus()
+                  });
+                });
+
+                check_button.hide();
+                del_button.hide();
+                var listitem = $("<li class=\"sortable\" id=\""+result.item_slug+"\"> <span class=\"movecursor\">"+result.listitem+"</span>&nbsp;</li>")
+                listitem.append(check_button);
+                listitem.append("&nbsp;");
+                listitem.append(del_button);
+                listitem.mouseover(function(){
+                  $(this).find(".btn-danger").show();
+                  $(this).find(".btn-primary").show();
+                }).mouseout(function(){
+                  $(this).find(".btn-danger").hide();
+                  $(this).find(".btn-primary").hide();
+                });
+                $("#item_list").append(listitem);
+                $("#item_list").append(form_list_item);
+                $('#add_item_form').find('.narrow-height').val('');
+                $(".narrow-height").focus()
+              },
+              error: function(result) {
+                 console.log(data)
+              }
             });
+            $(".narrow-height").focus()
             return false;
+        });
+      </script>
+
+
+      <script type="text/javascript">
+        $(".sortable" ).each(function() {
+          btn_danger = $(this).find(".btn-danger");
+          btn_danger.click(function() {
+            $.post('/delete_item/', {
+              item: $(this).attr('value'),
+              csrfmiddlewaretoken:'{{csrf_token}}'
+            },
+            function(data){
+              console.log('******** delete1 **********')
+              console.log(data);
+              console.log('****** end delete ********')
+            });
+            console.log('want to remove: '+$(this).attr('value'));
+            console.log($('#'+$(this).attr('value')));
+            $('#'+$(this).attr('value')).remove();
+          });
+          btn_primary = $(this).find(".btn-primary");
+          btn_primary.click(function() {
+            strike = $(this).parent().find('span').hasClass('strikeon');
+            $.post('/purchased/', {
+              item: $(this).attr('value'),
+              purchased: !strike,
+              csrfmiddlewaretoken:'{{csrf_token}}'
+            },
+            function(data) {
+              console.log(data);
+              if (data.success) {
+                if (data.purchased) {
+                  console.log('strikethrough')
+                  $('#'+data.item_slug).find('span').removeClass('strikeoff');
+                  $('#'+data.item_slug).find('span').addClass('strikeon');
+                }
+                else {
+                  console.log('no strike')
+                  $('#'+data.item_slug).find('span').removeClass('strikeon');
+                  $('#'+data.item_slug).find('span').addClass('strikeoff');
+                }
+              }
+            });
+          });
+        });
+        $(".narrow-height").focus()
+      </script>
+
+      <script type="text/javascript">
+        $(".btn-danger").hide()
+        $(".btn-primary").hide()
+        $(".sortable").mouseover(function(){
+          $(this).find(".btn-danger").show();
+          $(this).find(".btn-primary").show();
+        }).mouseout(function(){
+          $(this).find(".btn-danger").hide();
+          $(this).find(".btn-primary").hide();
+        });
+      </script>
+
+      <script type="text/javascript">
+        $(function() {
+          $('#item_list').sortable({
+            axis: 'y',
+            items: '.sortable',
+            start: function () {
+              $(this).find("li:not(.sortable)").each(function () {
+                $(this).data("fixedIndex", $(this).index());
+              });
+            },        
+            change: function () {
+              $(this).find("li:not(.sortable)").each(function () {
+                $(this).detach().insertAfter($("#item_list li:eq(" + ($(this).data("fixedIndex")-1) + ")"));
+              });
+            }
+          });
         });
       </script>
   </body>

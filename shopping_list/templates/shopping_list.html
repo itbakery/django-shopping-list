@@ -8,12 +8,24 @@
     <div class="col-xs-10 col-sm-6 col-md-4 col-lg-4 well">
       <ol id="item_list">
         {% for list_item in list_items %}
-        <li>{{list_item|capfirst}}</li>
+        <!-- <form class="form-inline" action="/del_item" method="post" role="form">{% csrf_token %} -->
+        <li class="sortable" id="{{list_item|slugify}}">
+          <span class="movecursor {% if list_item.purchased %}strikeon{% else %}strikeoff{% endif %}">{{list_item|capfirst}}</span>&nbsp;
+          <button type="submit" class="btn btn-primary btn-xs" value="{{list_item|slugify}}">
+            <i class="fa fa-check" style="color:black"></i>
+          </button>&nbsp;
+          <button type="submit" class="btn btn-danger btn-xs btn-pad" value="{{list_item|slugify}}">
+            <i class="fa fa-times" style="color:black"></i>
+          </button>
+        </li>
+        <!-- </form> -->
         {% endfor %}
-        <li>
-          <form action="/add_item/" method="post" id="add_item_form" role="form">{% csrf_token %}
-            <input type="text" name="newitem" value="" id="newitem"/>
-            <input type="submit" value="Add Item" /> 
+        <li id="form_list_item">
+          <form class="form-horizontal" action="/add_item/" method="post" id="add_item_form" role="form">{% csrf_token %}
+            <input class="narrow-height" type="text" name="newitem" value="" id="newitem"/>
+            <button type="submit" class="btn btn-success btn-xs btn-pad">
+                <i class="fa fa-plus" style="color:black"></i>
+            </button>
           </form>
         </li>
       </ol>
