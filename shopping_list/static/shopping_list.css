@@ -10,7 +10,7 @@
   margin-right: auto;
 }
 body {
-  padding-top: 60px;
+  padding-top: 0px;
   background-color: #f0f0f0;
 }
 .navbar-inverse .navbar-brand {
@@ -32,7 +32,6 @@ body {
 
 .navbar-brand {
     color: #f0f0f0;
-    text-align: center;
 }
 
 .my-box {
@@ -117,6 +116,7 @@ body {
 .strikeoff {
   text-decoration: none;
 }
+
 
 @media(min-width:768px)
 {

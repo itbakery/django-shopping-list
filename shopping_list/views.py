@@ -38,7 +38,11 @@ def signup(request):
     password = request.POST.get('password', '')
     confirm = request.POST.get('confirm_password', '')
     user = User.objects.create_user(username, email, password)
-    return HttpResponseRedirect('/auth/')
+    print 'user=', user
+    auth_user = auth.authenticate(username=username, password=password)
+    print 'auth_user', auth_user
+    auth.login(request, auth_user)
+    return HttpResponseRedirect('/shopping_list/')
 
 @login_required
 def add_item(request):
